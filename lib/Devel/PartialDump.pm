@@ -1,12 +1,23 @@
 #!/usr/bin/perl
-
+use strict;
+use warnings;
 package Devel::PartialDump;
-use Moose;
 
 use Carp ();
 use Scalar::Util qw(looks_like_number reftype blessed);
 
-use namespace::clean -except => 'meta';
+use namespace::clean -except => 'meta ';
+
+use Class::Tiny {
+    max_length => undef,
+    max_elements => 6,
+    max_depth => 2,
+    stringify => 0,
+    pairs => 1,
+    objects => 1,
+    list_delim => ", ",
+    pair_delim => ": ",
+};
 
 our $VERSION = "0.15";
 
@@ -49,58 +60,7 @@ sub replacement_caller_info {
 }
 
 
-has max_length => (
-	isa => "Int",
-	is  => "rw",
-	predicate => "has_max_length",
-	clearer => "clear_max_length",
-);
 
-has max_elements => (
-	isa => "Int",
-	is  => "rw",
-	default => 6,
-	predicate => "has_max_elements",
-	clearer => "clear_max_elements",
-);
-
-has max_depth => (
-	isa => "Int",
-	is  => "rw",
-	required => 1,
-	default => 2,
-);
-
-has stringify => (
-	isa => "Bool",
-	is  => "rw",
-	default => 0,
-);
-
-has pairs => (
-	isa => "Bool",
-	is  => "rw",
-	default => 1,
-);
-
-has objects => (
-	isa => "Bool",
-	is  => "rw",
-	default => 1,
-);
-
-has list_delim => (
-	isa => "Str",
-	default => ", ",
-	is => "rw",
-);
-
-has pair_delim => (
-	isa => "Str",
-	#default => " => ",
-	default => ": ",
-	is => "rw",
-);
 
 sub warn_str {
 	my ( @args ) = @_;
@@ -185,7 +145,7 @@ sub dump {
 
 	my $dump = $self->$method(1, @args);
 
-	if ( $self->has_max_length ) {
+	if ( defined $self->max_length ) {
 		if ( length($dump) > $self->max_length ) {
 			$dump = substr($dump, 0, $self->max_length - 3) . "...";
 		}
@@ -216,7 +176,7 @@ sub dump_as_pairs {
 	my ( $self, $depth, @what ) = @_;
 
 	my $truncated;
-	if ( $self->has_max_elements and ( @what / 2 ) > $self->max_elements ) {
+	if ( defined $self->max_elements and ( @what / 2 ) > $self->max_elements ) {
 		$truncated = 1;
 		@what = splice(@what, 0, $self->max_elements * 2 );
 	}
@@ -241,7 +201,7 @@ sub dump_as_list {
 	my ( $self, $depth, @what ) = @_;
 
 	my $truncated;
-	if ( $self->has_max_elements and @what > $self->max_elements ) {
+	if ( defined $self->max_elements and @what > $self->max_elements ) {
 		$truncated = 1;
 		@what = splice(@what, 0, $self->max_elements );
 	}
