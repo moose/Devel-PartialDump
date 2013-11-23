@@ -2,11 +2,6 @@ use strict;
 use warnings;
 
 use Test::More;
-
-BEGIN {
-    plan skip_all => "Test::Warn required for this test" unless eval { require Test::Warn };
-}
-
 use Test::Warn;
 
 {
