@@ -19,8 +19,6 @@ use Class::Tiny {
     pair_delim => ": ",
 };
 
-our $VERSION = "0.15";
-
 use Sub::Exporter -setup => {
 	exports => [qw(dump warn show show_scalar croak carp confess cluck $default_dumper)],
 	groups => {
@@ -575,11 +573,6 @@ C<max_depth> tracking. It will simply stringify the ref if the recursion limit
 has been reached.
 
 =back
-
-=head1 VERSION CONTROL
-
-This module is maintained using git. You can get the latest version from
-L<http://github.com/rafl/devel-partialdump>.
 
 =head1 AUTHOR
 
