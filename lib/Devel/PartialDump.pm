@@ -402,7 +402,7 @@ Not defined by default.
 
 The maximum number of elements (array elements or pairs in a hash) to print.
 
-Defualts to 6.
+Defaults to 6.
 
 =item max_depth
 
@@ -412,12 +412,14 @@ Defaults to 2.
 
 =item stringify
 
-Whether or not to let objects stringify themeslves, instead of using
-L<overload/StrVal> to avoid sideffects.
+Whether or not to let objects stringify themselves, instead of using
+L<overload/StrVal> to avoid side effects.
 
 Defaults to false (no overloading).
 
 =item pairs
+
+=for stopwords autodetect
 
 Whether or not to autodetect named args as pairs in the main C<dump> function.
 If this attribute is true, and the top level value list is even sized, and
@@ -484,7 +486,7 @@ for C<CORE::warn>.
 
 =item warn @blah
 
-A warpper for C<dump> that prints strings plainly.
+A wrapper for C<dump> that prints strings plainly.
 
 =item show @blah
 
@@ -497,12 +499,14 @@ Note that
 
     my $x = show foo();
 
-will actually evaluaate C<foo> in list context, so if you only want to dump a
+will actually evaluate C<foo> in list context, so if you only want to dump a
 single element and retain scalar context use
 
     my $x = show_scalar foo();
 
 which has a prototype of C<$> (as opposed to taking a list).
+
+=for stopwords Ingy
 
 This is similar to the venerable Ingy's fabulous and amazing L<XXX> module.
 
@@ -535,7 +539,7 @@ Dump as pairs returns comma delimited pairs with C<< => >> between the key and t
 
 Dump as list returns a comma delimited dump of the values.
 
-=item frmat $depth, $value
+=item format $depth, $value
 
 =item format_key $depth, $key
 
