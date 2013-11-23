@@ -308,8 +308,7 @@ sub format_number {
 
 our $default_dumper = __PACKAGE__->new;
 
-__PACKAGE__
-
+1;
 __END__
 
 =pod
