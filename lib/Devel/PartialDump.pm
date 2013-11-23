@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 package Devel::PartialDump;
+# ABSTRACT: Partial dumping of data structures, optimized for argument printing.
 
 use Carp ();
 use Scalar::Util qw(looks_like_number reftype blessed);
@@ -315,11 +316,6 @@ __END__
 
 =pod
 
-=head1 NAME
-
-Devel::PartialDump - Partial dumping of data structures, optimized for argument
-printing.
-
 =head1 SYNOPSIS
 
 	use Devel::PartialDump;
@@ -574,15 +570,4 @@ has been reached.
 
 =back
 
-=head1 AUTHOR
-
-Yuval Kogman E<lt>nothingmuch@woobling.orgE<gt>
-
-=head1 COPYRIGHT
-
-	Copyright (c) 2008, 2009 Yuval Kogman. All rights reserved
-	This program is free software; you can redistribute
-	it and/or modify it under the same terms as Perl itself.
-
 =cut
-
