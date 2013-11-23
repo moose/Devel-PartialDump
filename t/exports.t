@@ -5,7 +5,6 @@ use Test::More;
 
 BEGIN {
     plan skip_all => "Test::Warn required for this test" unless eval { require Test::Warn };
-    plan 'no_plan';
 }
 
 use Test::Warn;
@@ -28,3 +27,4 @@ warning_like { Foo::c } { carped => qr/foo/ }, 'carp';
 warning_is { like( Foo::d, qr/foo/, "dump" ) } [], "dump doesn't warn";
 warning_like { is_deeply( Foo::s, ["foo"], "show" ) } qr/foo/, "show warns";
 
+done_testing;
