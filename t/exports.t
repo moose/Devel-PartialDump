@@ -6,20 +6,20 @@ use warnings;
 use Test::More;
 
 BEGIN {
-	plan skip_all => "Test::Warn required for this test" unless eval { require Test::Warn };
-	plan 'no_plan';
+    plan skip_all => "Test::Warn required for this test" unless eval { require Test::Warn };
+    plan 'no_plan';
 }
 
 use Test::Warn;
 
 {
-	package Foo;
-	use ok 'Devel::PartialDump' => qw(warn show carp dump);
+    package Foo;
+    use ok 'Devel::PartialDump' => qw(warn show carp dump);
 
-	sub w { warn ["foo"] }
-	sub c { carp ["foo"] }
-	sub d { dump ["foo"] }
-	sub s { show ["foo"] }
+    sub w { warn ["foo"] }
+    sub c { carp ["foo"] }
+    sub d { dump ["foo"] }
+    sub s { show ["foo"] }
 }
 
 can_ok( Foo => qw(warn show carp dump) );
