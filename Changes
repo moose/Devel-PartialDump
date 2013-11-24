@@ -1,3 +1,6 @@
+    - Moose dependency removed, resolving circular dependency in Moose's
+      recommended prereqs (thanks, David Golden!)
+
 0.15
     - Bump dependency on namespace::clean to 0.20, as requested by doy++.
 
