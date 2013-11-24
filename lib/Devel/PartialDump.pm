@@ -6,7 +6,7 @@ package Devel::PartialDump;
 use Carp ();
 use Scalar::Util qw(looks_like_number reftype blessed);
 
-use namespace::clean -except => 'meta ';
+use namespace::clean;
 
 use Class::Tiny {
     max_length => undef,
