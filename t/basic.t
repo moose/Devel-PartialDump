@@ -89,4 +89,14 @@ subtest 'max_depth' => sub {
     like( $d->dump($data), qr/^HASH\(0x[a-z0-9]+\)/, "zero" );
 };
 
+{
+    local $d = Devel::PartialDump->new( pairs => 0, list_delim => ',' );
+    is( $d->dump("foo", "bar"), '"foo","bar"', "list_delim" );
+}
+
+{
+    local $d = Devel::PartialDump->new( pairs => 1, pair_delim => '=>' );
+    is( $d->dump("foo" => "bar"), 'foo=>"bar"', "pair_delim" );
+}
+
 done_testing;

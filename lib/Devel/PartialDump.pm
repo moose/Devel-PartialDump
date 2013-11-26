@@ -177,7 +177,7 @@ sub dump_as_pairs {
         @what = splice(@what, 0, $self->max_elements * 2 );
     }
 
-    return join($self->list_delim, $self->_dump_as_pairs($depth, @what), ($truncated ? "..." : ()) );
+    return join( $self->list_delim, $self->_dump_as_pairs($depth, @what), ($truncated ? "..." : ()) );
 }
 
 sub _dump_as_pairs {
@@ -202,7 +202,7 @@ sub dump_as_list {
         @what = splice(@what, 0, $self->max_elements );
     }
 
-    return join( ", ", ( map { $self->format($depth, $_) } @what ), ($truncated ? "..." : ()) );
+    return join( $self->list_delim, ( map { $self->format($depth, $_) } @what ), ($truncated ? "..." : ()) );
 }
 
 sub format {
