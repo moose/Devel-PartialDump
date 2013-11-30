@@ -31,7 +31,8 @@ package My::Object::Scalar;
 
     sub new {
         my $class = shift;
-        bless \$_[0], $class;
+        my $arg = shift;
+        bless \$arg, $class;
     }
     sub stringify { ${$_[0]} }
 }
