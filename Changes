@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    - many fixes (thanks, Steven Lee!)
+      - attribute list_delim is now being used in list dumps
+      - setting attribute max_length to 0 now shortens more, to '...'
+      - fixed use of = in array/hash ref objects
+      - extra test coverage
 
 0.16      2013-11-24 00:43:48Z
     - Moose dependency removed, resolving circular dependency in Moose's
