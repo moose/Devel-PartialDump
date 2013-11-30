@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.17      2013-11-30 20:47:47Z
     - many fixes (thanks, Steven Lee!)
       - attribute list_delim is now being used in list dumps
       - setting attribute max_length to 0 now shortens more, to '...'
