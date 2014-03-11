@@ -2,6 +2,7 @@ use strict;
 use warnings;
 package Devel::PartialDump;
 # ABSTRACT: Partial dumping of data structures, optimized for argument printing.
+# vim: set ts=8 sw=4 tw=78 et :
 
 use Carp ();
 use Scalar::Util qw(looks_like_number reftype blessed);
