@@ -32,7 +32,7 @@ use Sub::Exporter -setup => {
     collectors => {
         override_carp => sub {
             no warnings 'redefine';
-            require Carp::Heavy;
+            require Carp;
             *Carp::caller_info = \&replacement_caller_info;
         },
     },
