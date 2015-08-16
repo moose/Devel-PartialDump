@@ -1,6 +1,7 @@
 Revision history for Devel-PartialDump
 
 {{$NEXT}}
+    - update some distribution tooling
 
 0.17      2013-11-30 20:47:47Z
     - many fixes (thanks, Steven Lee!)
