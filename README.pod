@@ -1,0 +1,314 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Devel::PartialDump - Partial dumping of data structures, optimized for argument printing.
+
+=head1 VERSION
+
+version 0.18
+
+=head1 SYNOPSIS
+
+    use Devel::PartialDump;
+
+    sub foo {
+        print "foo called with args: " . Devel::PartialDump->new->dump(@_);
+    }
+
+    use Devel::PartialDump qw(warn);
+
+    # warn is overloaded to create a concise dump instead of stringifying $some_bad_data
+    warn "this made a boo boo: ", $some_bad_data
+
+=head1 DESCRIPTION
+
+This module is a data dumper optimized for logging of arbitrary parameters.
+
+It attempts to truncate overly verbose data, in a way that is hopefully more
+useful for diagnostics warnings than
+
+    warn Dumper(@stuff);
+
+Unlike other data dumping modules there are no attempts at correctness or cross
+referencing, this is only meant to provide a slightly deeper look into the data
+in question.
+
+There is a default recursion limit, and a default truncation of long lists, and
+the dump is formatted on one line (new lines in strings are escaped), to aid in
+readability.
+
+You can enable it temporarily by importing functions like C<warn>, C<croak> etc
+to get more informative errors during development, or even use it as:
+
+    BEGIN { local $@; eval "use Devel::PartialDump qw(...)" }
+
+to get DWIM formatting only if it's installed, without introducing a
+dependency.
+
+=head1 SAMPLE OUTPUT
+
+=over 4
+
+=item C<< "foo" >>
+
+    "foo"
+
+=item C<< "foo" => "bar" >>
+
+    foo: "bar"
+
+=item C<< foo => "bar", gorch => [ 1, "bah" ] >>
+
+    foo: "bar", gorch: [ 1, "bah" ]
+
+=item C<< [ { foo => ["bar"] } ] >>
+
+    [ { foo: ARRAY(0x9b265d0) } ]
+
+=item C<< [ 1 .. 10 ] >>
+
+    [ 1, 2, 3, 4, 5, 6, ... ]
+
+=item C<< "foo\nbar" >>
+
+    "foo\nbar"
+
+=item C<< "foo" . chr(1) >>
+
+    "foo\x{1}"
+
+=back
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item max_length
+
+The maximum character length of the dump.
+
+Anything bigger than this will be truncated.
+
+Not defined by default.
+
+=item max_elements
+
+The maximum number of elements (array elements or pairs in a hash) to print.
+
+Defaults to 6.
+
+=item max_depth
+
+The maximum level of recursion.
+
+Defaults to 2.
+
+=item stringify
+
+Whether or not to let objects stringify themselves, instead of using
+L<overload/StrVal> to avoid side effects.
+
+Defaults to false (no overloading).
+
+=item pairs
+
+=for stopwords autodetect
+
+Whether or not to autodetect named args as pairs in the main C<dump> function.
+If this attribute is true, and the top level value list is even sized, and
+every odd element is not a reference, then it will dumped as pairs instead of a
+list.
+
+=back
+
+=head1 EXPORTS
+
+All exports are optional, nothing is exported by default.
+
+This module uses L<Sub::Exporter>, so exports can be renamed, curried, etc.
+
+=over 4
+
+=item warn
+
+=item show
+
+=item show_scalar
+
+=item croak
+
+=item carp
+
+=item confess
+
+=item cluck
+
+=item dump
+
+See the various methods for behavior documentation.
+
+These methods will use C<$Devel::PartialDump::default_dumper> as the invocant if the
+first argument is not blessed and C<isa> L<Devel::PartialDump>, so they can be
+used as functions too.
+
+Particularly C<warn> can be used as a drop in replacement for the built in
+warn:
+
+    warn "blah blah: ", $some_data;
+
+by importing
+
+    use Devel::PartialDump qw(warn);
+
+C<$some_data> will be have some of it's data dumped.
+
+=item $default_dumper
+
+The default dumper object to use for export style calls.
+
+Can be assigned to to alter behavior globally.
+
+This is generally useful when using the C<warn> export as a drop in replacement
+for C<CORE::warn>.
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item warn @blah
+
+A wrapper for C<dump> that prints strings plainly.
+
+=item show @blah
+
+=item show_scalar $x
+
+Like C<warn>, but instead of returning the value from C<warn> it returns its
+arguments, so it can be used in the middle of an expression.
+
+Note that
+
+    my $x = show foo();
+
+will actually evaluate C<foo> in list context, so if you only want to dump a
+single element and retain scalar context use
+
+    my $x = show_scalar foo();
+
+which has a prototype of C<$> (as opposed to taking a list).
+
+=for stopwords Ingy
+
+This is similar to the venerable Ingy's fabulous and amazing L<XXX> module.
+
+=item carp
+
+=item croak
+
+=item confess
+
+=item cluck
+
+Drop in replacements for L<Carp> exports, that format their arguments like
+C<warn>.
+
+=item dump @stuff
+
+Returns a one line, human readable, concise dump of @stuff.
+
+If called in void context, will C<warn> with the dump.
+
+Truncates the dump according to C<max_length> if specified.
+
+=item dump_as_list $depth, @stuff
+
+=item dump_as_pairs $depth, @stuff
+
+Dump C<@stuff> using the various formatting functions.
+
+Dump as pairs returns comma delimited pairs with C<< => >> between the key and the value.
+
+Dump as list returns a comma delimited dump of the values.
+
+=item format $depth, $value
+
+=item format_key $depth, $key
+
+=item format_object $depth, $object
+
+=item format_ref $depth, $Ref
+
+=item format_array $depth, $array_ref
+
+=item format_hash $depth, $hash_ref
+
+=item format_undef $depth, undef
+
+=item format_string $depth, $string
+
+=item format_number $depth, $number
+
+=item quote $string
+
+The various formatting methods.
+
+You can override these to provide a custom format.
+
+C<format_array> and C<format_hash> recurse with C<$depth + 1> into
+C<dump_as_list> and C<dump_as_pairs> respectively.
+
+C<format_ref> delegates to C<format_array> and C<format_hash> and does the
+C<max_depth> tracking. It will simply stringify the ref if the recursion limit
+has been reached.
+
+=back
+
+=head1 AUTHOR
+
+יובל קוג'מן (Yuval Kogman) <nothingmuch@woobling.org>
+
+=head1 CONTRIBUTORS
+
+=for stopwords Karen Etheridge Florian Ragwitz Steven Lee Jesse Luehrs David Golden Leo Lapworth
+
+=over 4
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
+
+=item *
+
+Florian Ragwitz <rafl@debian.org>
+
+=item *
+
+Steven Lee <stevenwh.lee@gmail.com>
+
+=item *
+
+Jesse Luehrs <doy@tozt.net>
+
+=item *
+
+David Golden <dagolden@cpan.org>
+
+=item *
+
+Leo Lapworth <web@web-teams-computer.local>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2008 by יובל קוג'מן (Yuval Kogman).
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
