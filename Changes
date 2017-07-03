@@ -1,6 +1,7 @@
 Revision history for Devel-PartialDump
 
 {{$NEXT}}
+    - remove use of Test::Warn in tests
 
 0.18      2015-08-16 04:35:35Z
     - update some distribution tooling
