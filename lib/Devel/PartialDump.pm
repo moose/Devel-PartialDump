@@ -1,9 +1,9 @@
 use strict;
 use warnings;
 package Devel::PartialDump;
+# vim: set ts=8 sts=4 sw=4 tw=115 et :
 # ABSTRACT: Partial dumping of data structures, optimized for argument printing.
 # KEYWORDS: development debugging dump dumper diagnostics deep data structures
-# vim: set ts=8 sts=4 sw=4 tw=78 et :
 
 our $VERSION = '0.19';
 
