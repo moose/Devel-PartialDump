@@ -1,5 +1,7 @@
 Revision history for Devel-PartialDump
 
+{{$NEXT}}
+
 0.19      2017-07-03 20:24:01Z
     - remove use of Test::Warn in tests
 

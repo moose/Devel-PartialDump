@@ -5,7 +5,7 @@ package Devel::PartialDump;
 # ABSTRACT: Partial dumping of data structures, optimized for argument printing.
 # KEYWORDS: development debugging dump dumper diagnostics deep data structures
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 use Carp ();
 use Scalar::Util qw(looks_like_number reftype blessed);
