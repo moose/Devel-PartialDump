@@ -1,6 +1,7 @@
 Revision history for Devel-PartialDump
 
 {{$NEXT}}
+    - fix tests on Carp <1.25 (Paul Howarth, PR#1)
 
 0.19      2017-07-03 20:24:01Z
     - remove use of Test::Warn in tests
