@@ -8,7 +8,7 @@ Devel::PartialDump - Partial dumping of data structures, optimized for argument 
 
 =head1 VERSION
 
-version 0.19
+version 0.20
 
 =head1 SYNOPSIS
 
@@ -285,7 +285,7 @@ L<C<#moose> on C<irc.perl.org>|irc://irc.perl.org/#moose>.
 
 =head1 CONTRIBUTORS
 
-=for stopwords Karen Etheridge Florian Ragwitz Steven Lee Jesse Luehrs David Golden Leo Lapworth
+=for stopwords Karen Etheridge Florian Ragwitz Steven Lee Leo Lapworth Jesse Luehrs David Golden Paul Howarth
 
 =over 4
 
@@ -303,6 +303,10 @@ Steven Lee <stevenwh.lee@gmail.com>
 
 =item *
 
+Leo Lapworth <web@web-teams-computer.local>
+
+=item *
+
 Jesse Luehrs <doy@tozt.net>
 
 =item *
@@ -311,7 +315,7 @@ David Golden <dagolden@cpan.org>
 
 =item *
 
-Leo Lapworth <web@web-teams-computer.local>
+Paul Howarth <paul@city-fan.org>
 
 =back
 
